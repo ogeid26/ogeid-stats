@@ -8,18 +8,18 @@ library("tidyverse")
 
 # Creamos vector del header
 years <- seq(2011,2021,by=1)
-title <- c("Zona", years)
+title <- c("Departamento", years)
 
 
 # Formateamos el excel y convertimos a df
-area_res_df <- read_excel("data/c8.xlsx", range = "A11:L13")
-area_res_df <- data.frame(area_res_df)
+area_dep_df <- read_excel("data/c8.xlsx", range = "A40:L46")
+area_dep_df <- data.frame(area_dep_df)
 
 # Ponemos título a nuestro df
-colnames(area_res_df) <-title
+colnames(area_dep_df) <-title
 
 # Normalizamos
-area_res_df <- area_res_df %>%
+area_dep_df <- area_dep_df %>%
   pivot_longer(c(`2011`,`2012`,`2013`,
                  `2014`,`2015`,`2016`,
                  `2017`,`2018`,`2019`,
@@ -27,17 +27,17 @@ area_res_df <- area_res_df %>%
                names_to="año",
                values_to="porcentaje")
 
-zone_graph <- ggplot(data=area_res_df, aes(x=año,y=porcentaje, group=Zona, label=porcentaje)) +
-  geom_line(aes(color=Zona)) + 
-  geom_point(aes(color=Zona)) +
+dep_graph <- ggplot(data=area_dep_df, aes(x=año,y=porcentaje, group=Departamento, label=porcentaje)) +
+  geom_line(aes(color=Departamento)) + 
+  geom_point(aes(color=Departamento)) +
   #  geom_text(
   #    hjust=0, vjust=0, size=3
   #    ) +
-  scale_color_brewer(palette="Paired") + 
+  scale_color_brewer(palette="Spectral") + 
   theme_minimal() + 
   labs(
     title = "Población de 6 y más años de edad que hace uso de Internet",
-    subtitle = "Según zona de residencia",
+    subtitle = "Según departamento",
     
     caption = "Fuente: Instituto Nacional de Estadística e Informática"
   ) + 
@@ -46,6 +46,4 @@ zone_graph <- ggplot(data=area_res_df, aes(x=año,y=porcentaje, group=Zona, labe
 
 
 
-zone_graph
-
-
+dep_graph

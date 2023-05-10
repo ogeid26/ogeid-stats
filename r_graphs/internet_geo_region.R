@@ -8,18 +8,18 @@ library("tidyverse")
 
 # Creamos vector del header
 years <- seq(2011,2021,by=1)
-title <- c("Zona", years)
+title <- c("Región", years)
 
 
 # Formateamos el excel y convertimos a df
-area_res_df <- read_excel("data/c8.xlsx", range = "A11:L13")
-area_res_df <- data.frame(area_res_df)
+area_reg_df <- read_excel("data/c8.xlsx", range = "A15:L18")
+area_reg_df <- data.frame(area_reg_df)
 
 # Ponemos título a nuestro df
-colnames(area_res_df) <-title
+colnames(area_reg_df) <-title
 
 # Normalizamos
-area_res_df <- area_res_df %>%
+area_reg_df <- area_reg_df %>%
   pivot_longer(c(`2011`,`2012`,`2013`,
                  `2014`,`2015`,`2016`,
                  `2017`,`2018`,`2019`,
@@ -27,9 +27,9 @@ area_res_df <- area_res_df %>%
                names_to="año",
                values_to="porcentaje")
 
-zone_graph <- ggplot(data=area_res_df, aes(x=año,y=porcentaje, group=Zona, label=porcentaje)) +
-  geom_line(aes(color=Zona)) + 
-  geom_point(aes(color=Zona)) +
+reg_graph <- ggplot(data=area_reg_df, aes(x=año,y=porcentaje, group=Región, label=porcentaje)) +
+  geom_line(aes(color=Región)) + 
+  geom_point(aes(color=Región)) +
   #  geom_text(
   #    hjust=0, vjust=0, size=3
   #    ) +
@@ -37,7 +37,7 @@ zone_graph <- ggplot(data=area_res_df, aes(x=año,y=porcentaje, group=Zona, labe
   theme_minimal() + 
   labs(
     title = "Población de 6 y más años de edad que hace uso de Internet",
-    subtitle = "Según zona de residencia",
+    subtitle = "Según región natural",
     
     caption = "Fuente: Instituto Nacional de Estadística e Informática"
   ) + 
@@ -46,6 +46,4 @@ zone_graph <- ggplot(data=area_res_df, aes(x=año,y=porcentaje, group=Zona, labe
 
 
 
-zone_graph
-
-
+reg_graph
